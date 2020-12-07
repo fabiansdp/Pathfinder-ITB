@@ -9,6 +9,7 @@ def Masukkan_data_ITB():
     global grid
     for i in range(8,30):
         grid[i][9]="Unknown"
+
     grid[26][14]="Unknown"
     grid[35][12]="Unknown"
     for i in range(6,13):
@@ -137,6 +138,7 @@ class Cell(object):
         self.f=0
     def __lt__(self, other):
         return self.f < other.f
+        
 class Astar(object):
     def __init__(self):
         #open list
@@ -180,6 +182,7 @@ class Astar(object):
         if (cell.y<self.grid_width-1):
             cells.append(self.get_cell(cell.x,cell.y+1))
         return cells
+        
     def get_path(self):
         cell=self.end
         path=[(cell.x,cell.y)]
@@ -221,9 +224,7 @@ class Astar(object):
                         heapq.heappush(self.opened, (adj_cell.f, adj_cell))
 
 
-
-
-#Fungsi
+#Fungsi Untuk Mencari Posisi
 def Cari_posisi(target, koordinat):
     Target_x=0
     Target_y=0
@@ -238,12 +239,17 @@ def Cari_posisi(target, koordinat):
     else:
         return Target_y
 
-#Algoritma
+
+
+#####################################################################
+##################          Main Program            #################
+#####################################################################
 Sudah_pernah=[[False for j in range(19)] for i in range(42)]
 grid = [['*' for j in range(19)] for i in range(42)]
 Rute=[]
 Jalan_yang_dilewati=0
 Masukkan_data_ITB()
+
 #####################################################################
 print("Masukkan Posisi Anda:", end=" ")
 Posisi_awal=input()
@@ -256,6 +262,7 @@ Awal=(Awal_x,Awal_y)
 Akhir_x=Cari_posisi(Posisi_akhir, "x")
 Akhir_y=Cari_posisi(Posisi_akhir, "y")
 Akhir=(Akhir_x,Akhir_y)
+
 #####################################################################
 print("Pilihan Transportasi")
 print("1. Sepeda")
@@ -265,6 +272,7 @@ if (Moda_Transportasi==1):
     Kecepatan=2
 elif (Moda_Transportasi==2):
     Kecepatan=1
+
 #####################################################################
 tidakbisa=set()
 for i in range(42):
@@ -276,6 +284,7 @@ Jalan_jalan.init_grid(42,19,tidakbisa,Awal,Akhir)
 Jawaban=Jalan_jalan.solve()
 #######################################################################
 print("Estimasi Waktu Kedatangan: "+str(len(Jawaban)*20/Kecepatan/60)+ " menit")
+
 #######################################################################
 print("Rute jalan dari "+Posisi_awal+" ke "+Posisi_akhir)
 for i in range(len(Jawaban)):
@@ -287,5 +296,5 @@ for i in range(len(Jawaban)):
     else:
         tmp=grid[Jawaban[i][0]][Jawaban[i][1]]
         print("- "+str(grid[Jawaban[i][0]][Jawaban[i][1]]))
+
 ###################ALHAMDULILLAH#########################
-input()
